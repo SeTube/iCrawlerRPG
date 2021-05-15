@@ -295,7 +295,7 @@ var Upgrades = function() {
 		for (var i = 0; i < upgradeList.length; i++) {
 			if (!upgradeList[i].purchased && self.isUpgradePurchased(upgradeList[i].required)) {
 				upgradeList[i].shown = true;
-				document.getElementById("upgrades").innerHTML += '<div class="row"><div class="col-xs-7"><button class="btn btn-primary btn-block" data-toggle="tooltip" data-placement="top" title="' + upgradeList[i].description + '" onClick="upgrades.buyUpgrade(\'' + upgradeList[i].id + '\')">' + upgradeList[i].name + '</button></div><div class="col-xs-5"><p>(花费: ' + upgradeList[i].exceliaCost + ')</p></div></div><div class="row" style="height: 5px;"></div>';
+				document.getElementById("upgrades").innerHTML += '<div class="row"><div class="col-xs-7"><button class="btn btn-primary btn-block" data-toggle="tooltip" data-placement="top" title="' + upgradeList[i].description + '" onClick="upgrades.buyUpgrade(\'' + upgradeList[i].id + '\')">' + upgradeList[i].name + '</button><br><p>' + upgradeList[i].description + '</p></div><div class="col-xs-5"><p>(花费: ' + upgradeList[i].exceliaCost + ')</p></div></div><div class="row" style="height: 5px;"></div>';
 			}
 		}
 		$(document).ready(function(){
