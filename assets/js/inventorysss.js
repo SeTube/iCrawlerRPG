@@ -1,10 +1,10 @@
 var Inventory = function() {
 
-    var gold = 0;
+    var gold = 20000;
     var keys = 0;
     var bag = [];
     var keyPrice = Math.round(Math.random() * 10000);
-    var crystalPrice = Math.round(Math.random() * 20000);
+    var crystalPrice = Math.round(Math.random() * 15000);
     var equippedWeapon;
     var equippedArmor;
     var equippedAccessory;
