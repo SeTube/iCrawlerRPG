@@ -3,8 +3,8 @@ var Inventory = function() {
     var gold = 0;
     var keys = 0;
     var bag = [];
-    var keyPrice = Math.round(Math.random() * 100000);
-    var crystalPrice = Math.round(Math.random() * 200000);
+    var keyPrice = Math.round(Math.random() * 10000);
+    var crystalPrice = Math.round(Math.random() * 20000);
     var equippedWeapon;
     var equippedArmor;
     var equippedAccessory;
@@ -141,7 +141,7 @@ var Inventory = function() {
             document.getElementById("inventory").innerHTML += '<button type="button" class="list-group-item" data-toggle="tooltip" title="' + tooltip + '" onClick="inventory.equipWeapon(' + number + ')"><span class="badge">武器</span>' + weapon.name + '<br><span class="badge">属性</span>' + tip + '</button>';
         }
         else {
-            var price = Math.round((weapon.damage + weapon.speed + weapon.defense + weapon.magic) * 50 * weapon.rarity);
+            var price = Math.round((weapon.damage + weapon.speed + weapon.defense + weapon.magic) * 10 * weapon.rarity);
             document.getElementById("inventory").innerHTML += '<button type="button" class="list-group-item list-group-item-success" data-toggle="tooltip" title="' + tooltip + '" onClick="inventory.sell(' + number + ',' + price + ')"><span class="badge">价格' + price + '</span>' + weapon.name + '<br><span class="badge">属性</span>' + tip + '</button>';
         }
     };
@@ -153,7 +153,7 @@ var Inventory = function() {
             document.getElementById("inventory").innerHTML += '<button type="button" class="list-group-item" data-toggle="tooltip" title="' + tooltip + '" onClick="inventory.equipArmor(' + number + ')"><span class="badge">护甲</span>' + armor.name + '<br><span class="badge">属性</span>' + tip + '</button>';
         }
         else {
-            var price = Math.round((armor.defense + armor.movement + armor.magic) * 100 * armor.rarity);
+            var price = Math.round((armor.defense + armor.movement + armor.magic) * 10 * armor.rarity);
             document.getElementById("inventory").innerHTML += '<button type="button" class="list-group-item list-group-item-success" data-toggle="tooltip" title="' + tooltip + '" onClick="inventory.sell(' + number + ',' + price + ')"><span class="badge">价格' + price + '</span>' + armor.name + '<br><span class="badge">属性</span>' + tip + '</button>';
         }
     };
@@ -272,7 +272,7 @@ var Inventory = function() {
         name += nameRarity(weapon);
         name += nameDamageAttribute(highest);
         if (highest == weapon.damage) {
-            name += "剑";
+            name += "太刀";
         }
         else if (highest == weapon.speed) {
             name += "匕首";
@@ -296,35 +296,43 @@ var Inventory = function() {
         }
         else if (highest == armor.movement) {
             name += nameSpeedAttribute(armor.movement);
-            name += "皮革背心";
+            name += "背心";
         }
         else if (highest == armor.magic) {
             name += nameMagicalAttribute(armor.magic);
-            name += "棉布长袍";
+            name += "长袍";
         }
         return name;
     };
 
     var nameRarity = function(equipment) {
-        if (equipment.rarity < 50) {
+        if (equipment.rarity < 10) {
+            equipment.rarity = 0.5;
+            return "(破烂)";
+        }
+        else if (equipment.rarity < 25) {
             equipment.rarity = 1;
             return "(普通)";
         }
-        else if (equipment.rarity < 75) {
+        else if (equipment.rarity < 50) {
             equipment.rarity = 1.25;
             return "(罕见)";
         }
-        else if (equipment.rarity < 90) {
+        else if (equipment.rarity < 75) {
             equipment.rarity = 1.5;
             return "(稀有)";
         }
-        else if (equipment.rarity < 100) {
+        else if (equipment.rarity < 90) {
             equipment.rarity = 2.0;
             return "(史诗)";
         }
+        else if (equipment.rarity < 100) {
+            equipment.rarity = 2.25;
+            return "(传奇)";
+        }
         else if (equipment.rarity == 100) {
             equipment.rarity = 2.5;
-            return "(传奇)";
+            return "(超神)";
         }
     };
 
@@ -333,17 +341,29 @@ var Inventory = function() {
         damage = damage*10;
         console.log(damage);
         name += nameAdjective(damage%10);
-        if (damage < 10) {
-            name += "(木制)";
+        if (damage < 5) {
+            name += "(木)";
+        }
+        else if (damage < 10) {
+            name += "(铜)";
+        }
+        else if (damage < 15) {
+            name += "(铝)";
         }
         else if (damage < 20) {
-            name += "(铜制)";
+            name += "(铁)";
+        }
+        else if (damage < 25) {
+            name += "(钢)";
         }
         else if (damage < 30) {
-            name += "(铁制)";
-        }
+            name += "(银)";
+        } 
+        else if (damage < 35) {
+            name += "(金)";
+        } 
         else if (damage < 40) {
-            name += "(钢制)";
+            name += "(钛)";
         }
         return name;
     };
@@ -390,19 +410,22 @@ var Inventory = function() {
 
     var nameMagicalAttribute = function(speed) {
         var name = "";
-        speed = speed*10;
+        speed = speed * 10;
         console.log(speed);
         name += nameAdjective(speed%10);
         if (speed < 10) {
             name += "(无用)";
         }
         else if (speed < 20) {
-            name += "(棉制)";
+            name += "(腐朽)";
         }
         else if (speed < 30) {
             name += "(难看)";
         }
         else if (speed < 40) {
+            name += "(棉质)";
+        }
+        else if (speed < 50) {
             name += "(神奇)";
         }
         return name;
@@ -413,13 +436,13 @@ var Inventory = function() {
             return "(弱化)";
         }
         else if (stats < 6) {
-            return "(普通)";
+            return "(罕见)";
         }
         else if (stats < 9) {
-            return "(强力)";
+            return "(史诗)";
         }
         else {
-            return "(原始)";
+            return "(传承)";
         }
     };
 
@@ -439,29 +462,45 @@ var Inventory = function() {
         var name = "";
         name += extraRarity(chest);
         if (chest.rarity < 5) {
-            name += "(白色)";
+            name += "(白)";
         }
         else if (chest.rarity < 10) {
-            name += "(蓝色)";
+            name += "(绿)";
         }
         else if (chest.rarity < 25) {
-            name += "(紫色)";
+            name += "(蓝)";
         }
         else if (chest.rarity < 50) {
-            name += "(粉色)";
+            name += "(紫)";
+        }
+        else if (chest.rarity < 80) {
+            name += "(青)";
         }
         else if (chest.rarity < 100) {
-            name += "(肉色)";
+            name += "(粉)";
+        } 
+        else if (chest.rarity < 200) {
+            name += "(金)";
+        }
+        else if (chest.rarity < 230) {
+            name += "(暗)";
+        }
+        else if (chest.rarity < 240) {
+            name += "(赤)";
         }
         else if (chest.rarity < 250) {
-            name += "(橙色)";
+            name += "(红)";
         }
         return name;
     };
 
     var extraRarity = function(chest) {
+        //rarity 稀有度
         var rarity = Math.floor(Math.random() * 101);
-        if (rarity < 50) {
+        if (rarity < 30) {
+            return "(垃圾)";
+        }
+        else if (rarity < 50) {
             return "(普通)";
         }
         else if (rarity < 75) {
@@ -479,6 +518,10 @@ var Inventory = function() {
         else if (rarity == 100) {
             chest.rarity += 20;
             return "(传说)";
+        } 
+        else if (rarity == 100) {
+            chest.rarity += 99;
+            return "(神话)";
         }
     };
 
