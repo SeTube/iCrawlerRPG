@@ -268,13 +268,13 @@ var Upgrades = function() {
 	self.loadTimeUpgrades = function() {
 		for (var i = 0; i < upgradeList.length; i++) {
 			if (upgradeList[i].id == "timewarp1" && upgradeList[i].purchased === true) {
-				document.getElementById("speed2").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(500)">x2</button>';
+				document.getElementById("speed2").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(50)">x20</button>';
 			}
 			else if (upgradeList[i].id == "timewarp2" && upgradeList[i].purchased === true) {
-				document.getElementById("speed5").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(200)">x5</button>';
+				document.getElementById("speed5").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(20)">x50</button>';
 			}
 			else if (upgradeList[i].id == "timewarp3" && upgradeList[i].purchased === true) {
-				document.getElementById("speed10").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(100)">x10</button>';
+				document.getElementById("speed10").innerHTML = '<button class="btn btn-primary" onClick="system.gameSpeed(10)">x100</button>';
 			}
 		}
 	};
